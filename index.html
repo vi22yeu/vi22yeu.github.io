@@ -2,19 +2,248 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Web Của Tôi</title>
     <style>
-        body { font-family: Arial; text-align: center; padding: 50px; background: #f0f0f0; }
-        h1 { color: #333; }
-        .download-btn { display: inline-block; padding: 15px 30px; background: #2ea44f; color: white; text-decoration: none; border-radius: 6px; font-size: 18px; margin-top: 20px; }
-        .download-btn:hover { background: #23853b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: #f4f4f9; color: #333; line-height: 1.6; }
+        
+        /* ===== ĐẦU TRANG + MENU CHÍNH ===== */
+        header { background: linear-gradient(135deg, #2c3e50, #3498db); padding: 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { color: white; font-size: 24px; font-weight: bold; padding: 15px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Menu chính */
+        nav.menu-main { background: rgba(0,0,0,0.1); }
+        nav.menu-main ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav.menu-main ul li { position: relative; }
+        nav.menu-main ul li a { display: block; padding: 14px 18px; color: white; text-decoration: none; font-size: 15px; transition: all 0.3s; }
+        nav.menu-main ul li a:hover, nav.menu-main ul li a.active { background: #3498db; color: white; }
+
+        /* Menu phụ (con) */
+        .sub-menu { background: white; padding: 12px 20px; border-bottom: 2px solid #e0e0e0; display: none; }
+        .sub-menu.active { display: block; animation: fadeIn 0.3s ease; }
+        .sub-menu h3 { font-size: 16px; color: #2c3e50; margin-bottom: 10px; }
+        .sub-menu-links { display: flex; flex-wrap: wrap; gap: 10px; }
+        .sub-menu-links a { padding: 8px 16px; background: #f0f4f8; color: #2c3e50; border-radius: 20px; text-decoration: none; font-size: 14px; transition: all 0.2s; }
+        .sub-menu-links a:hover, .sub-menu-links a.active-sub { background: #3498db; color: white; }
+
+        /* ===== NỘI DUNG ===== */
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        section { display: none; animation: fadeIn 0.5s ease; }
+        section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        h2 { font-size: 28px; margin-bottom: 20px; color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        .card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card h3 { font-size: 20px; margin-bottom: 10px; color: #2c3e50; }
+        .card p { color: #666; margin-bottom: 15px; }
+        .download-btn { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: all 0.3s; }
+        .download-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
+
+        /* ===== CHÂN TRANG ===== */
+        footer { text-align: center; padding: 25px; background: #2c3e50; color: white; margin-top: 50px; }
     </style>
 </head>
 <body>
-    <h1>👋 Chào Mừng Đến Với Trang Web Của Tôi!</h1>
-    <p>Đây là trang web tôi tạo trên GitHub Pages!</p>
-    
-    <h2>📦 Tải Ứng Dụng Của Tôi</h2>
-    <a href="#" class="download-btn">👉 Nhấn Vào Đây Để Tải</a>
+
+<!-- ===== ĐẦU TRANG + MENU CHÍNH ===== -->
+<header>
+    <div class="logo">🌐 Trang Web Của Tôi</div>
+    <nav class="menu-main">
+        <ul>
+            <li><a href="#" class="menu-link active" data-page="home">🏠 Trang Chủ</a></li>
+            <li><a href="#" class="menu-link" data-page="news">📰 Tin Tức</a></li>
+            <li><a href="#" class="menu-link" data-page="sports">⚽ Thể Thao</a></li>
+            <li><a href="#" class="menu-link" data-page="apps">📱 Ứng Dụng</a></li>
+            <li><a href="#" class="menu-link" data-page="games">🎮 Game</a></li>
+            <li><a href="#" class="menu-link" data-page="about">ℹ️ Giới Thiệu</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MENU PHỤ CON ===== -->
+    <div class="sub-menu" id="sub-news">
+        <h3>📰 Tin Tức — Chọn mục:</h3>
+        <div class="sub-menu-links">
+            <a href="#" class="sub-link active-sub" data-sub="news-trongnuoc">🇻🇳 Trong nước</a>
+            <a href="#" class="sub-link" data-sub="news-nuocngoai">🌍 Nước ngoài</a>
+        </div>
+    </div>
+    <div class="sub-menu" id="sub-sports">
+        <h3>⚽ Thể Thao — Chọn mục:</h3>
+        <div class="sub-menu-links">
+            <a href="#" class="sub-link active-sub" data-sub="sports-bongda">⚽ Bóng Đá</a>
+            <a href="#" class="sub-link" data-sub="sports-khac">🏀 Thể Thao Khác</a>
+        </div>
+    </div>
+    <div class="sub-menu" id="sub-apps">
+        <h3>📱 Ứng Dụng — Chọn mục:</h3>
+        <div class="sub-menu-links">
+            <a href="#" class="sub-link active-sub" data-sub="apps-android">📱 Android</a>
+            <a href="#" class="sub-link" data-sub="apps-pc">💻 PC</a>
+        </div>
+    </div>
+    <div class="sub-menu" id="sub-games">
+        <h3>🎮 Game — Chọn mục:</h3>
+        <div class="sub-menu-links">
+            <a href="#" class="sub-link active-sub" data-sub="games-pc">💻 Game PC</a>
+            <a href="#" class="sub-link" data-sub="games-dt">📱 Game Điện Thoại</a>
+        </div>
+    </div>
+</header>
+
+<!-- ===== NỘI DUNG CHÍNH ===== -->
+<div class="container">
+
+    <!-- ===== TRANG CHỦ ===== -->
+    <section id="home" class="page-section active">
+        <h2>👋 Chào Mừng Đến Với Trang Web Của Tôi!</h2>
+        <div class="card">
+            <h3>🎉 Xin Chào Bạn!</h3>
+            <p>Đây là trang web cá nhân tôi tạo trên GitHub Pages. Tại đây bạn có thể tìm thấy:</p>
+            <p>📰 <strong>Tin tức:</strong> Trong nước & Nước ngoài</p>
+            <p>⚽ <strong>Thể thao:</strong> Bóng đá & các môn khác</p>
+            <p>📱 <strong>Ứng dụng:</strong> Android & PC</p>
+            <p>🎮 <strong>Game:</strong> Game PC & Game điện thoại</p>
+            <p>👉 Chọn mục bên trên để khám phá nhé!</p>
+        </div>
+    </section>
+
+    <!-- ===== TIN TỨC ===== -->
+    <section id="news" class="page-section">
+        <div id="news-trongnuoc" class="sub-section active">
+            <h2>🇻🇳 Tin Tức Trong Nước</h2>
+            <div class="card"><h3>🔹 Cập nhật tình hình trong nước</h3><p>Tin tức xã hội, kinh tế, văn hóa, đời sống tại Việt Nam được cập nhật liên tục...</p></div>
+            <div class="card"><h3>🔹 Sự kiện nổi bật</h3><p>Các sự kiện quan trọng, chính sách mới và tin tức đáng chú ý trong ngày...</p></div>
+        </div>
+        <div id="news-nuocngoai" class="sub-section">
+            <h2>🌍 Tin Tức Nước Ngoài</h2>
+            <div class="card"><h3>🔹 Thế giới hôm nay</h3><p>Tin tức quốc tế, chính trị, kinh tế và các sự kiện lớn trên toàn cầu...</p></div>
+            <div class="card"><h3>🔹 Quan hệ quốc tế</h3><p>Thông tin về quan hệ giữa các quốc gia, hội nghị và hợp tác toàn cầu...</p></div>
+        </div>
+    </section>
+
+    <!-- ===== THỂ THAO ===== -->
+    <section id="sports" class="page-section">
+        <div id="sports-bongda" class="sub-section active">
+            <h2>⚽ Bóng Đá</h2>
+            <div class="card"><h3>🏆 Bóng Đá Việt Nam</h3><p>V-League, ĐTQG, các giải đấu trong nước — kết quả, bảng xếp hạng, lịch thi đấu!</p></div>
+            <div class="card"><h3>🌍 Bóng Đá Quốc Tế</h3><p>Ngoại Hạng Anh, La Liga, Bundesliga, World Cup — cập nhật từng trận!</p></div>
+        </div>
+        <div id="sports-khac" class="sub-section">
+            <h2>🏀 Thể Thao Khác</h2>
+            <div class="card"><h3>🏀 Bóng Rổ</h3><p>Tin tức NBA, giải châu Á và các giải đấu trong nước...</p></div>
+            <div class="card"><h3>🏸 Cầu Lông & Đua Xe</h3><p>Các môn thể thao hấp dẫn khác được cập nhật liên tục...</p></div>
+        </div>
+    </section>
+
+    <!-- ===== ỨNG DỤNG ===== -->
+    <section id="apps" class="page-section">
+        <div id="apps-android" class="sub-section active">
+            <h2>📱 Ứng Dụng Android</h2>
+            <div class="card"><h3>📦 Ứng Dụng Hữu Ích</h3><p>Các app miễn phí, an toàn cho điện thoại — tiện ích, công cụ, giải trí!</p><a href="#" class="download-btn">👉 Tải Ngay</a></div>
+            <div class="card"><h3>🛠️ Công Cụ</h3><p>Trình duyệt, chỉnh sửa ảnh, xem video, quản lý file...</p><a href="#" class="download-btn">👉 Tải Ngay</a></div>
+        </div>
+        <div id="apps-pc" class="sub-section">
+            <h2>💻 Ứng Dụng PC</h2>
+            <div class="card"><h3>🖥️ Phần Mềm Máy Tính</h3><p>Các phần mềm văn phòng, thiết kế, chỉnh sửa ảnh, bảo mật!</p><a href="#" class="download-btn">👉 Tải Ngay</a></div>
+            <div class="card"><h3>🔧 Công Cụ Hệ Thống</h3><p>Tối ưu hóa, dọn dẹp, kiểm tra phần cứng, quản lý ổ đĩa...</p><a href="#" class="download-btn">👉 Tải Ngay</a></div>
+        </div>
+    </section>
+
+    <!-- ===== GAME ===== -->
+    <section id="games" class="page-section">
+        <div id="games-pc" class="sub-section active">
+            <h2>💻 Game PC</h2>
+            <div class="card"><h3>🕹️ Game Nhẹ & Cũ</h3><p>Game offline nhẹ máy, chơi được mọi cấu hình — cổ điển và hay nhất!</p><a href="#" class="download-btn">👉 Xem Ngay</a></div>
+            <div class="card"><h3>🎮 Game Hiện Đại</h3><p>Game hot, hướng dẫn cài đặt và yêu cầu cấu hình chi tiết!</p><a href="#" class="download-btn">👉 Xem Ngay</a></div>
+        </div>
+        <div id="games-dt" class="sub-section">
+            <h2>📱 Game Điện Thoại</h2>
+            <div class="card"><h3>📲 Game Offline</h3><p>Game không cần mạng, nhẹ máy, hay và miễn phí!</p><a href="#" class="download-btn">👉 Xem Ngay</a></div>
+            <div class="card"><h3>🌐 Game Online</h3><p>Game hot nhất trên di động — cập nhật tin tức và hướng dẫn chơi!</p><a href="#" class="download-btn">👉 Xem Ngay</a></div>
+        </div>
+    </section>
+
+    <!-- ===== GIỚI THIỆU ===== -->
+    <section id="about" class="page-section">
+        <h2>ℹ️ Giới Thiệu</h2>
+        <div class="card">
+            <h3>🌐 Về Trang Web</h3>
+            <p>Trang web được tạo với mục đích chia sẻ thông tin hữu ích, tin tức, ứng dụng và game miễn phí cho mọi người!</p>
+            <p><strong>Liên hệ:</strong> Nếu có câu hỏi hoặc góp ý, vui lòng phản hồi bất kỳ lúc nào!</p>
+        </div>
+    </section>
+
+</div>
+
+<!-- ===== CHÂN TRANG ===== -->
+<footer>
+    <p>© 2026 Trang Web Của Tôi — Tạo trên GitHub Pages</p>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // Ẩn tất cả menu phụ
+    function hideAllSubMenu() {
+        document.querySelectorAll('.sub-menu').forEach(m => m.classList.remove('active'));
+        document.querySelectorAll('.sub-section').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.sub-link').forEach(l => l.classList.remove('active-sub'));
+    }
+
+    // Chuyển trang chính
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const page = link.dataset.page;
+            
+            // Cập nhật trạng thái menu chính
+            document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            
+            // Ẩn tất cả nội dung
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            
+            // Hiện trang được chọn
+            const section = document.getElementById(page);
+            if (section) section.classList.add('active');
+            
+            // Hiện/Ẩn menu phụ
+            if (page === 'home' || page === 'about') {
+                hideAllSubMenu();
+            } else {
+                hideAllSubMenu();
+                const subMenu = document.getElementById('sub-' + page);
+                if (subMenu) subMenu.classList.add('active');
+                // Hiện mục con đầu tiên
+                const firstSub = section.querySelector('.sub-section');
+                if (firstSub) firstSub.style.display = 'block';
+                const firstLink = document.querySelector(`#sub-${page} .sub-link`);
+                if (firstLink) firstLink.classList.add('active-sub');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // Chuyển mục con
+    document.querySelectorAll('.sub-link').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const subId = link.dataset.sub;
+            const parentMenu = link.closest('.sub-menu').id.replace('sub-', '');
+            
+            // Cập nhật trạng thái link phụ
+            document.querySelectorAll(`#sub-${parentMenu} .sub-link`).forEach(l => l.classList.remove('active-sub'));
+            link.classList.add('active-sub');
+            
+            // Ẩn hết mục con
+            document.querySelectorAll(`#${parentMenu} .sub-section`).forEach(s => s.style.display = 'none');
+            // Hiện mục được chọn
+            document.getElementById(subId).style.display = 'block';
+        });
+    });
+</script>
+
 </body>
 </html>
