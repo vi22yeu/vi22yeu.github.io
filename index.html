@@ -1,241 +1,855 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Tin Tổng Hợp</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tin Tức 24H</title>
+
+<style>
+
+/* ===== CƠ BẢN ===== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f5fa;
+    color: #30445a;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    background: linear-gradient(135deg, #087db5, #04a3df);
+    color: white;
+    padding-top: 15px;
+}
+
+/* ===== MENU ===== */
+
+.menu {
+    max-width: 1000px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.menu button {
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 19px;
+    padding: 20px 5px;
+    cursor: pointer;
+}
+
+.menu button:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.menu button.active {
+    background: #079bd9;
+}
+
+/* ===== NỘI DUNG ===== */
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 25px 18px 60px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-title {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* ===== MENU NHỎ ===== */
+
+.sub-menu {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.sub-menu button {
+    border: none;
+    background: #e9edf4;
+    color: #30445a;
+    padding: 14px 24px;
+    border-radius: 40px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.sub-menu button.active,
+.sub-menu button:hover {
+    background: #079bd9;
+    color: white;
+}
+
+/* ===== THẺ ===== */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+}
+
+.card h2 {
+    font-size: 25px;
+    margin-bottom: 13px;
+}
+
+.card p {
+    color: #707070;
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* ===== NÚT XEM ===== */
+
+.view-button {
+    display: inline-block;
+    border: none;
+    background: #04c96b;
+    color: white;
+    padding: 14px 25px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(0,200,100,0.25);
+}
+
+.view-button:hover {
+    background: #00b85c;
+}
+
+/* ===== TRANG CHỦ ===== */
+
+.home-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.home-title h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.home-title p {
+    color: #777;
+    font-size: 18px;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+    background: #087db5;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+
+/* ===== ĐIỆN THOẠI ===== */
+
+@media (max-width: 700px) {
+
+    .menu button {
+        font-size: 16px;
+        padding: 18px 3px;
+    }
+
+    .container {
+        padding: 22px 16px 50px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 27px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .card h2 {
+        font-size: 24px;
+    }
+
+    .card p {
+        font-size: 17px;
+    }
+
+    .home-title h1 {
+        font-size: 28px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
+
+<!-- ================= MENU ================= -->
+
 <header>
-    <div class="logo">🌐 TIN TỨC 24H</div>
 
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <div class="menu">
 
-    <nav id="menu">
-        <a href="#" onclick="showSection('home')">Trang chủ</a>
-        <a href="#" onclick="showSection('news')">📰 Tin tức</a>
-        <a href="#" onclick="showSection('sport')">⚽ Thể thao</a>
-        <a href="#" onclick="showSection('comic')">📚 Truyện tranh</a>
-        <a href="#" onclick="showSection('app')">📱 Ứng dụng</a>
-    </nav>
+        <button class="active"
+        onclick="showPage('home', this)">
+            🏠 Trang Chủ
+        </button>
+
+        <button
+        onclick="showPage('news', this)">
+            📰 Tin Tức
+        </button>
+
+        <button
+        onclick="showPage('sport', this)">
+            ⚽ Thể Thao
+        </button>
+
+        <button
+        onclick="showPage('comic', this)">
+            📚 Truyện Tranh
+        </button>
+
+        <button
+        onclick="showPage('app', this)">
+            📱 Ứng Dụng
+        </button>
+
+        <button
+        onclick="showPage('about', this)">
+            ℹ️ Giới Thiệu
+        </button>
+
+    </div>
+
 </header>
+
+
+<!-- ================= NỘI DUNG ================= -->
 
 <div class="container">
 
-    <!-- TRANG CHỦ -->
-    <section id="home" class="section active">
-        <div class="hero">
-            <h1>Chào mừng bạn đến với TIN TỨC 24H</h1>
-            <p>Tin tức • Thể thao • Truyện tranh • Ứng dụng</p>
-        </div>
 
-        <h2>⭐ Nội dung nổi bật</h2>
+<!-- ===== TRANG CHỦ ===== -->
 
-        <div class="cards">
-            <div class="card">
-                <div class="icon">📰</div>
-                <h3>Tin tức</h3>
-                <p>Cập nhật tin trong nước và quốc tế.</p>
-                <button onclick="showSection('news')">Xem tin tức</button>
-            </div>
+<section id="home" class="page active">
 
-            <div class="card">
-                <div class="icon">⚽</div>
-                <h3>Thể thao</h3>
-                <p>Bóng đá và các môn thể thao khác.</p>
-                <button onclick="showSection('sport')">Xem thể thao</button>
-            </div>
+    <div class="home-title">
 
-            <div class="card">
-                <div class="icon">📚</div>
-                <h3>Truyện tranh</h3>
-                <p>Doraemon, Conan, Dragon Ball và truyện cười.</p>
-                <button onclick="showSection('comic')">Xem truyện</button>
-            </div>
+        <h1>🌟 Chào mừng bạn</h1>
 
-            <div class="card">
-                <div class="icon">📱</div>
-                <h3>Ứng dụng</h3>
-                <p>Ứng dụng dành cho PC và điện thoại.</p>
-                <button onclick="showSection('app')">Xem ứng dụng</button>
-            </div>
-        </div>
-    </section>
+        <p>
+            Tin tức • Thể thao • Truyện tranh • Ứng dụng
+        </p>
+
+    </div>
 
 
-    <!-- TIN TỨC -->
-    <section id="news" class="section">
-        <h1>📰 Tin tức</h1>
+    <div class="cards">
 
-        <div class="sub-menu">
-            <button onclick="filterNews('vn')">🇻🇳 Tin trong nước</button>
-            <button onclick="filterNews('world')">🌎 Tin quốc tế</button>
-        </div>
+        <div class="card">
 
-        <div id="news-list" class="article-list">
+            <h2>📰 Tin Tức</h2>
 
-            <article class="article vn">
-                <h2>Tin tức trong nước</h2>
-                <p>Cập nhật những thông tin mới nhất tại Việt Nam.</p>
-                <span>Tin trong nước</span>
-            </article>
+            <p>
+                Cập nhật tin tức trong nước
+                và quốc tế.
+            </p>
 
-            <article class="article vn">
-                <h2>Kinh tế Việt Nam</h2>
-                <p>Thông tin kinh tế, thị trường và đời sống.</p>
-                <span>Tin trong nước</span>
-            </article>
-
-            <article class="article world">
-                <h2>Tin quốc tế mới nhất</h2>
-                <p>Cập nhật các sự kiện nổi bật trên thế giới.</p>
-                <span>Tin quốc tế</span>
-            </article>
-
-            <article class="article world">
-                <h2>Công nghệ thế giới</h2>
-                <p>Những xu hướng công nghệ mới đáng chú ý.</p>
-                <span>Tin quốc tế</span>
-            </article>
+            <button class="view-button"
+            onclick="showPage('news', document.querySelectorAll('.menu button')[1])">
+                👉 Xem Ngay
+            </button>
 
         </div>
-    </section>
 
 
-    <!-- THỂ THAO -->
-    <section id="sport" class="section">
-        <h1>⚽ Thể thao</h1>
+        <div class="card">
 
-        <div class="sub-menu">
-            <button onclick="filterSport('football')">⚽ Bóng đá</button>
-            <button onclick="filterSport('other')">🏀 Thể thao khác</button>
-        </div>
+            <h2>⚽ Thể Thao</h2>
 
-        <div class="article-list">
+            <p>
+                Bóng đá và các môn thể thao
+                hấp dẫn khác.
+            </p>
 
-            <article class="article football">
-                <h2>Bóng đá Việt Nam</h2>
-                <p>Tin tức các đội tuyển và câu lạc bộ Việt Nam.</p>
-                <span>Bóng đá</span>
-            </article>
-
-            <article class="article football">
-                <h2>Bóng đá quốc tế</h2>
-                <p>Cập nhật các giải đấu bóng đá lớn trên thế giới.</p>
-                <span>Bóng đá</span>
-            </article>
-
-            <article class="article other">
-                <h2>🏀 Bóng rổ</h2>
-                <p>Tin tức và kết quả bóng rổ.</p>
-                <span>Thể thao khác</span>
-            </article>
-
-            <article class="article other">
-                <h2>🎾 Quần vợt</h2>
-                <p>Thông tin các giải đấu quần vợt.</p>
-                <span>Thể thao khác</span>
-            </article>
+            <button class="view-button"
+            onclick="showPage('sport', document.querySelectorAll('.menu button')[2])">
+                👉 Xem Ngay
+            </button>
 
         </div>
-    </section>
 
 
-    <!-- TRUYỆN TRANH -->
-    <section id="comic" class="section">
-        <h1>📚 Truyện tranh</h1>
+        <div class="card">
 
-        <div class="comic-grid">
+            <h2>📚 Truyện Tranh</h2>
 
-            <div class="comic-card">
-                <div class="comic-icon">🤖</div>
-                <h2>Doraemon</h2>
-                <p>Những câu chuyện vui nhộn của Doraemon và Nobita.</p>
-                <button onclick="openComic('Doraemon')">Xem truyện</button>
-            </div>
+            <p>
+                Doraemon, Dragon Ball, Conan,
+                truyện cười và nhiều truyện khác.
+            </p>
 
-            <div class="comic-card">
-                <div class="comic-icon">🐉</div>
-                <h2>7 Viên Ngọc Rồng</h2>
-                <p>Thế giới Dragon Ball và những trận chiến hấp dẫn.</p>
-                <button onclick="openComic('7 Viên Ngọc Rồng')">Xem truyện</button>
-            </div>
-
-            <div class="comic-card">
-                <div class="comic-icon">🔎</div>
-                <h2>Thám Tử Lừng Danh Conan</h2>
-                <p>Cùng Conan phá giải những vụ án bí ẩn.</p>
-                <button onclick="openComic('Conan')">Xem truyện</button>
-            </div>
-
-            <div class="comic-card">
-                <div class="comic-icon">😂</div>
-                <h2>Truyện cười</h2>
-                <p>Những câu chuyện hài hước giải trí.</p>
-                <button onclick="openComic('Truyện cười')">Xem truyện</button>
-            </div>
-
-            <div class="comic-card">
-                <div class="comic-icon">📖</div>
-                <h2>Truyện khác</h2>
-                <p>Khám phá thêm nhiều thể loại truyện.</p>
-                <button onclick="openComic('Truyện khác')">Xem truyện</button>
-            </div>
+            <button class="view-button"
+            onclick="showPage('comic', document.querySelectorAll('.menu button')[3])">
+                👉 Xem Ngay
+            </button>
 
         </div>
-    </section>
 
 
-    <!-- ỨNG DỤNG -->
-    <section id="app" class="section">
-        <h1>📱 Ứng dụng</h1>
+        <div class="card">
 
-        <div class="sub-menu">
-            <button onclick="filterApps('pc')">💻 PC</button>
-            <button onclick="filterApps('phone')">📱 Điện thoại</button>
-        </div>
+            <h2>📱 Ứng Dụng</h2>
 
-        <div class="article-list">
+            <p>
+                Ứng dụng và phần mềm dành cho
+                PC và điện thoại.
+            </p>
 
-            <article class="article pc">
-                <h2>💻 Ứng dụng Windows</h2>
-                <p>Các phần mềm hữu ích dành cho máy tính.</p>
-                <span>PC</span>
-            </article>
-
-            <article class="article pc">
-                <h2>🛠️ Phần mềm tiện ích</h2>
-                <p>Công cụ hỗ trợ công việc và giải trí trên PC.</p>
-                <span>PC</span>
-            </article>
-
-            <article class="article phone">
-                <h2>📱 Ứng dụng Android</h2>
-                <p>Các ứng dụng hữu ích dành cho điện thoại Android.</p>
-                <span>Điện thoại</span>
-            </article>
-
-            <article class="article phone">
-                <h2>🍎 Ứng dụng iPhone</h2>
-                <p>Những ứng dụng hữu ích dành cho iPhone.</p>
-                <span>Điện thoại</span>
-            </article>
+            <button class="view-button"
+            onclick="showPage('app', document.querySelectorAll('.menu button')[4])">
+                👉 Xem Ngay
+            </button>
 
         </div>
-    </section>
+
+    </div>
+
+</section>
+
+
+<!-- ===== TIN TỨC ===== -->
+
+<section id="news" class="page">
+
+    <h1 class="page-title">
+        📰 Tin Tức
+    </h1>
+
+    <div class="sub-menu">
+
+        <button class="active"
+        onclick="showCategory('news-vn', this)">
+            🇻🇳 Tin Trong Nước
+        </button>
+
+        <button
+        onclick="showCategory('news-world', this)">
+            🌎 Tin Quốc Tế
+        </button>
+
+    </div>
+
+
+    <div id="news-vn" class="cards category">
+
+        <div class="card">
+
+            <h2>🇻🇳 Tin Việt Nam</h2>
+
+            <p>
+                Cập nhật những thông tin mới
+                nhất trong nước.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📊 Kinh Tế</h2>
+
+            <p>
+                Tin kinh tế, thị trường,
+                tài chính và đời sống.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="news-world"
+    class="cards category"
+    style="display:none">
+
+        <div class="card">
+
+            <h2>🌎 Tin Quốc Tế</h2>
+
+            <p>
+                Những sự kiện nổi bật
+                trên thế giới.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>💻 Công Nghệ</h2>
+
+            <p>
+                Tin công nghệ mới nhất
+                trên thế giới.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===== THỂ THAO ===== -->
+
+<section id="sport" class="page">
+
+    <h1 class="page-title">
+        ⚽ Thể Thao
+    </h1>
+
+    <div class="sub-menu">
+
+        <button class="active"
+        onclick="showCategory('football', this)">
+            ⚽ Bóng Đá
+        </button>
+
+        <button
+        onclick="showCategory('sport-other', this)">
+            🏀 Thể Thao Khác
+        </button>
+
+    </div>
+
+
+    <div id="football" class="cards category">
+
+        <div class="card">
+
+            <h2>🇻🇳 Bóng Đá Việt Nam</h2>
+
+            <p>
+                Tin đội tuyển Việt Nam,
+                V.League và các câu lạc bộ.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🌎 Bóng Đá Quốc Tế</h2>
+
+            <p>
+                Tin các giải đấu bóng đá
+                lớn trên thế giới.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="sport-other"
+    class="cards category"
+    style="display:none">
+
+        <div class="card">
+
+            <h2>🏀 Bóng Rổ</h2>
+
+            <p>
+                Tin bóng rổ trong nước
+                và quốc tế.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🎾 Quần Vợt</h2>
+
+            <p>
+                Tin tức các giải quần vợt
+                lớn trên thế giới.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===== TRUYỆN TRANH ===== -->
+
+<section id="comic" class="page">
+
+    <h1 class="page-title">
+        📚 Truyện Tranh
+    </h1>
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h2>🤖 Doraemon</h2>
+
+            <p>
+                Những câu chuyện vui nhộn
+                của Doraemon và Nobita.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Truyện
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🐉 7 Viên Ngọc Rồng</h2>
+
+            <p>
+                Thế giới Dragon Ball
+                và những trận chiến hấp dẫn.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Truyện
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🔎 Thám Tử Lừng Danh Conan</h2>
+
+            <p>
+                Những vụ án bí ẩn
+                cùng Conan.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Truyện
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>😂 Truyện Cười</h2>
+
+            <p>
+                Những câu chuyện hài hước
+                để giải trí.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Truyện
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📖 Truyện Khác</h2>
+
+            <p>
+                Khám phá thêm nhiều
+                thể loại truyện.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Truyện
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ===== ỨNG DỤNG ===== -->
+
+<section id="app" class="page">
+
+    <h1 class="page-title">
+        📱 Ứng Dụng
+    </h1>
+
+
+    <div class="sub-menu">
+
+        <button class="active"
+        onclick="showCategory('app-pc', this)">
+            💻 PC
+        </button>
+
+        <button
+        onclick="showCategory('app-phone', this)">
+            📱 Điện Thoại
+        </button>
+
+    </div>
+
+
+    <div id="app-pc" class="cards category">
+
+        <div class="card">
+
+            <h2>💻 Ứng Dụng Windows</h2>
+
+            <p>
+                Phần mềm văn phòng,
+                tiện ích và công cụ cho PC.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🛠️ Phần Mềm Tiện Ích</h2>
+
+            <p>
+                Những phần mềm hữu ích
+                cho máy tính.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="app-phone"
+    class="cards category"
+    style="display:none">
+
+        <div class="card">
+
+            <h2>📱 Android</h2>
+
+            <p>
+                Ứng dụng hữu ích
+                dành cho Android.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🍎 iPhone</h2>
+
+            <p>
+                Ứng dụng dành cho
+                iPhone và iPad.
+            </p>
+
+            <button class="view-button">
+                👉 Xem Ngay
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===== GIỚI THIỆU ===== -->
+
+<section id="about" class="page">
+
+    <h1 class="page-title">
+        ℹ️ Giới Thiệu
+    </h1>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h2>🌐 Tin Tức 24H</h2>
+
+            <p>
+                Website tổng hợp tin tức,
+                thể thao, truyện tranh
+                và ứng dụng.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h2>📞 Liên Hệ</h2>
+
+            <p>
+                Bạn có thể thêm thông tin
+                liên hệ của mình tại đây.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 </div>
 
 
+<!-- ===== FOOTER ===== -->
+
 <footer>
-    <p>© 2026 TIN TỨC 24H</p>
-    <p>Tin tức • Thể thao • Truyện tranh • Ứng dụng</p>
+    © 2026 Tin Tức 24H
 </footer>
 
-<script src="script.js"></script>
+
+<script>
+
+/* CHUYỂN MỤC CHÍNH */
+
+function showPage(pageId, button) {
+
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+
+    document.querySelectorAll(".menu button").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* CHUYỂN MỤC NHỎ */
+
+function showCategory(categoryId, button) {
+
+    let parent = button.closest(".page");
+
+
+    parent.querySelectorAll(".category").forEach(function(category) {
+        category.style.display = "none";
+    });
+
+
+    document.getElementById(categoryId).style.display = "grid";
+
+
+    parent.querySelectorAll(".sub-menu button").forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+
+    button.classList.add("active");
+}
+
+</script>
 
 </body>
-    </html>
+</html>
